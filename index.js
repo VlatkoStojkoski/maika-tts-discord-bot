@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const { runCommand } = require('./commands/commands');
+const server = require('./server');
 require('dotenv').config();
 
 client.login(process.env.TOKEN);
@@ -20,3 +21,5 @@ client.on('message', async (message) => {
 
 	runCommand(command, message, args);
 });
+
+server();
