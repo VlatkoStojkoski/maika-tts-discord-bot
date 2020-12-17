@@ -18,7 +18,7 @@ const requestToken = async (model) => {
 	}
 };
 
-module.exports.speak = async (text) => {
+const getAudioUrl = async (text) => {
 	const model = {
 		Text: text,
 	};
@@ -26,4 +26,12 @@ module.exports.speak = async (text) => {
 	const token = await requestToken(model);
 
 	return `https://maika.mk/api/v1/tts/synthesize?token=${token}`;
+};
+
+module.exports = async ({ member: { voice } }, args) => {
+	const connection = await voice.channel.join();
+
+	const url = await getAudioUrl(args);
+
+	const dispatcher = connection.play(url);
 };
